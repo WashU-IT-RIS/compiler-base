@@ -3,7 +3,7 @@
 These images have been developed as working examples to aid in demonstrating how to
 build and leverage compilers using Docker.
 
-Image Location: `us.gcr.io/ris-appeng-shared-dev/intel-base`
+Image Location: `us.gcr.io/ris-appeng-shared-dev/compiler-base`
 
 Versions Available:
 - Tags:
@@ -39,7 +39,7 @@ Versions Available:
 2. Run on LSF, mounting the necessary storage allocation(s) for use.
    ```bash
    LSF_DOCKER_VOLUMES="/scratch1/fs1/ris/application/intel/oneapi/:/opt/intel/oneapi" \
-   bsub -Is -q general-interactive -a 'docker(us.gcr.io/ris-appeng-shared-dev/intel-base:oneapi2021.1.1_centos7)' \
+   bsub -Is -q general-interactive -a 'docker(us.gcr.io/ris-appeng-shared-dev/compiler-base:oneapi2021.1.1_centos7)' \
    /bin/bash
    ```
 3. Set up the Intel environment.
@@ -71,7 +71,7 @@ public consumption.
 1. Create a new Dockerfile.
    ```bash
    # Begin Stage 1 with the base compiler image.
-   FROM us.gcr.io/ris-appeng-shared-dev/intel-base:oneapi2021.1.1_centos7 as build
+   FROM us.gcr.io/ris-appeng-shared-dev/compiler-base:oneapi2021.1.1_centos7 as build
 
    # Add any additional build dependencies here.
 
@@ -126,7 +126,7 @@ caches the source code in build layers resulting in public exposure which may be
 
 1. Create a new Dockerfile.
    ```bash
-   FROM us.gcr.io/ris-appeng-shared-dev/intel-base:oneapi2021.1.1_centos7
+   FROM us.gcr.io/ris-appeng-shared-dev/compiler-base:oneapi2021.1.1_centos7
 
    # Add any additional build dependencies here.
 
