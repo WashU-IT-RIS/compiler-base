@@ -7,6 +7,7 @@ RUN cd /tmp/ && yum install -y \
   cmake \
   ethtool \
   flex \
+  gcc-c++ \
   gcc-gfortran \
   gtk2 \
   libmnl \
