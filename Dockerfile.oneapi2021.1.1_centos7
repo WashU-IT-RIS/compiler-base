@@ -25,7 +25,7 @@ RUN cd /tmp/ && yum install -y \
   zlib-devel && \
   yum clean all
 
-ENV MOFED_VERSION 4.9-2.2.4.0
+ENV MOFED_VERSION 5.4-3.1.0.0
 ENV OS_VERSION rhel7.7
 ENV PLATFORM x86_64
 RUN wget -q http://content.mellanox.com/ofed/MLNX_OFED-${MOFED_VERSION}/MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
