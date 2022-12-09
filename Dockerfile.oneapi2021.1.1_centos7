@@ -7,11 +7,13 @@ RUN cd /tmp/ && yum install -y \
   cmake \
   ethtool \
   flex \
+  fuse-libs \
   gcc-c++ \
   gcc-gfortran \
   gtk2 \
   libmnl \
   libnl3 \
+  libusbx \
   lsof \
   make \
   numactl-libs \
