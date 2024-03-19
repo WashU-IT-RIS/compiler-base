@@ -71,7 +71,7 @@ public consumption.
 1. Create a new Dockerfile.
    ```bash
    # Begin Stage 1 with the base compiler image.
-   FROM us.gcr.io/ris-appeng-shared-dev/compiler-base:oneapi2021.1.1_centos7 as build
+   FROM ghcr.io/WashU-IT-RIS/compiler-base:oneapi2021.1.1_centos7 as build
 
    # Add any additional build dependencies here.
 
@@ -88,7 +88,7 @@ public consumption.
       cp -f example.binary /usr/local/bin
 
    # Begin Stage 2 with a new base image.
-   FROM centos:7
+   FROM docker.io/centos:7.9-2009
 
    # Copy only the needed parts of Stage 1.
    COPY --from=build /usr/local/bin/example.binary /usr/local/bin
@@ -98,8 +98,8 @@ public consumption.
    # Add any additional runtime dependencies here.
 
    # Set up MLNX_OFED driver.
-   ENV MOFED_VERSION 5.4-3.1.0.0
-   ENV OS_VERSION rhel7.7
+   ENV MOFED_VERSION 5.8-4.1.5.0
+   ENV OS_VERSION rhel7.9
    ENV PLATFORM x86_64
    RUN wget -q http://content.mellanox.com/ofed/MLNX_OFED-${MOFED_VERSION}/MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
       tar -xvf MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
@@ -126,7 +126,7 @@ caches the source code in build layers resulting in public exposure which may be
 
 1. Create a new Dockerfile.
    ```bash
-   FROM us.gcr.io/ris-appeng-shared-dev/compiler-base:oneapi2021.1.1_centos7
+   FROM ghcr.io/WashU-IT-RIS/compiler-base:oneapi2021.1.1_centos7
 
    # Add any additional build dependencies here.
 
