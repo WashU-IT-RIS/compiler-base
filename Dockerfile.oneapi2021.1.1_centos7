@@ -1,5 +1,11 @@
 FROM centos:7.9.2009
 
+LABEL org.opencontainers.image.title='Intel® Compiler Base'
+LABEL org.opencontainers.image.description='Intel® Compiler Base'
+LABEL org.opencontainers.image.vendor='ris.wustl.edu'
+LABEL org.opencontainers.image.url='https://docs.ris.wustl.edu/doc/compute/recipes/tools/intel-oneapi-tutorial.html'
+LABEL org.opencontainers.image.source='https://github.com/WashU-IT-RIS/compiler-base'
+
 RUN cd /tmp/ && yum install -y \
   atk \
   byacc \
