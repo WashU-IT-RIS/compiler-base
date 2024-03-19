@@ -12,7 +12,7 @@ Versions Available:
 ## Build oneapi2021.1.1_centos7 Image
 1. Clone this repo.
    ```bash
-   git clone ssh://git@bitbucket.wustl.edu:2222/risdev/compiler-base.git
+   git clone ssh://git@github.com/WashU-IT-RIS/compiler-base.git
    ```
 2. Change directory.
    ```bash
