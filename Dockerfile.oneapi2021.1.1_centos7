@@ -1,4 +1,10 @@
-FROM centos:7
+FROM centos:7.9.2009
+
+LABEL org.opencontainers.image.title='Intel® Compiler Base'
+LABEL org.opencontainers.image.description='Intel® Compiler Base'
+LABEL org.opencontainers.image.vendor='ris.wustl.edu'
+LABEL org.opencontainers.image.url='https://docs.ris.wustl.edu/doc/compute/recipes/tools/intel-oneapi-tutorial.html'
+LABEL org.opencontainers.image.source='https://github.com/WashU-IT-RIS/compiler-base'
 
 RUN cd /tmp/ && yum install -y \
   atk \
@@ -27,8 +33,8 @@ RUN cd /tmp/ && yum install -y \
   zlib-devel && \
   yum clean all
 
-ENV MOFED_VERSION 5.4-3.1.0.0
-ENV OS_VERSION rhel7.7
+ENV MOFED_VERSION 5.8-4.1.5.0
+ENV OS_VERSION rhel7.9
 ENV PLATFORM x86_64
 RUN wget -q http://content.mellanox.com/ofed/MLNX_OFED-${MOFED_VERSION}/MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
   tar -xvf MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
@@ -38,3 +44,4 @@ RUN wget -q http://content.mellanox.com/ofed/MLNX_OFED-${MOFED_VERSION}/MLNX_OFE
   rm -rf *.tgz
 
 COPY oneapi /opt/intel/oneapi
+
