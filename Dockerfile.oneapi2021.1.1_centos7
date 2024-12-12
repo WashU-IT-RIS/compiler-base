@@ -6,6 +6,8 @@ LABEL org.opencontainers.image.vendor='ris.wustl.edu'
 LABEL org.opencontainers.image.url='https://docs.ris.wustl.edu/doc/compute/recipes/tools/intel-oneapi-tutorial.html'
 LABEL org.opencontainers.image.source='https://github.com/WashU-IT-RIS/compiler-base'
 
+COPY yum.repos.d/* /etc/yum.repos.d/
+
 RUN cd /tmp/ && yum install -y \
   atk \
   byacc \
