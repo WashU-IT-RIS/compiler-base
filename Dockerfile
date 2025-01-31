@@ -56,6 +56,12 @@ RUN mkdir /tmp/mofed && \
       -q && \
     rm -rf /tmp/mofed
 
-COPY oneapi /opt/intel/oneapi 
-
+#COPY oneapi /opt/intel/oneapi 
+# Install Intel OneAPI
+RUN apt-get update -y && \
+    apt-get install -y gpg-agent wget \
+    wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null && \
+    echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list && \
+    apt-get update -y && \
+    apt-get install -y intel-oneapi-hpc-toolkit
 
