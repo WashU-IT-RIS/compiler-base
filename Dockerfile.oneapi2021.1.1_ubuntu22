@@ -6,9 +6,6 @@ LABEL org.opencontainers.image.vendor='ris.wustl.edu'
 LABEL org.opencontainers.image.url='https://docs.ris.wustl.edu/doc/compute/recipes/tools/intel-oneapi-tutorial.html'
 LABEL org.opencontainers.image.source='https://github.com/WashU-IT-RIS/compiler-base'
 
-COPY lsf/ /opt/ibm/lsfsuite/lsf/10.1/
-COPY ld.so.conf.d/ /etc/ld.so.conf.d/
-
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
     apt-get install -y \
     autoconf \
