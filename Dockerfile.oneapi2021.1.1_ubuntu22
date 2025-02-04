@@ -59,3 +59,4 @@ RUN wget -q http://content.mellanox.com/ofed/MLNX_OFED-${MOFED_VERSION}/MLNX_OFE
 
 COPY oneapi /opt/intel/oneapi
 
+
