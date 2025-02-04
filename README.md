@@ -3,13 +3,13 @@
 These images have been developed as working examples to aid in demonstrating how to
 build and leverage compilers using Docker.
 
-Image Location: `us.gcr.io/ris-appeng-shared-dev/compiler-base`
+Image Location: `ghcr.io/washu-it-ris/compiler-base`
 
 Versions Available:
 - Tags:
-  - latest, oneapi2021.1.1_centos7
+  - latest, ubuntu22_oneapi2025-1_mofed5-8
 
-## Build oneapi2021.1.1_centos7 Image
+## Build ubuntu22_oneapi2025-1_mofed5-8 Image
 1. Clone this repo.
    ```bash
    git clone ssh://git@github.com/WashU-IT-RIS/compiler-base.git
@@ -18,28 +18,26 @@ Versions Available:
    ```bash
    cd /compiler-base
    ```
-3. Copy oneapi.
+3. Create Docker image. Replace `<IMAGE_NAME>:<TAG>` with that of your choosing.
    ```bash
-   cp -r /scratch1/fs1/ris/application/intel/oneapi/ .
-   chmod 755 -R oneapi/
+   docker build --tag <IMAGE_NAME>:<TAG> -f Dockerfile .
    ```
-4. Create Docker image. Replace `<IMAGE_NAME>:<TAG>` with that of your choosing.
-   ```bash
-   docker build --tag <IMAGE_NAME>:<TAG> -f Dockerfile.oneapi2021.1.1_centos7 .
-   ```
-5. Push the Docker image.
+4. Push the Docker image.
    ```bash
    docker push <IMAGE_NAME>:<TAG>
    ```
 
-## Compile Using oneapi2021.1.1_centos7 Base Image
+## Compile Using ubuntu22_oneapi2025-1_mofed5-8 Base Image
 1. Connect to the compute client.
    ```bash
    ssh <wustlkey>@compute1-client-1.ris.wustl.edu
 2. Run on LSF, mounting the necessary storage allocation(s) for use.
    ```bash
-   LSF_DOCKER_VOLUMES="/scratch1/fs1/ris/application/intel/oneapi/:/opt/intel/oneapi" \
-   bsub -Is -q general-interactive -a 'docker(us.gcr.io/ris-appeng-shared-dev/compiler-base:oneapi2021.1.1_centos7)' \
+   LSF_DOCKER_NETWORK=host \
+   LSF_DOCKER_IPC=host \
+   bsub -n 20 -Is -q general-interactive \
+   -R "affinity[core(1):distribute=pack] span[ptile=4]" \
+   bsub -Is -q general-interactive -a 'docker(us.gcr.io/ris-appeng-shared-dev/compiler-base:ubuntu22_oneapi2025-1_mofed5-8)' \
    /bin/bash
    ```
 3. Set up the Intel environment.
@@ -48,7 +46,7 @@ Versions Available:
    ```
 4. Compile code.
 
-## Extend oneapi2021.1.1_centos7 Base Image
+## Extend ubuntu22_oneapi2025-1_mofed5-8 Base Image
 
 ### Multi Stage Build: Compile, Keep Only Binaries
 Create a new image containing:
