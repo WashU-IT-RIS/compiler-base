@@ -58,7 +58,7 @@ RUN mkdir /tmp/mofed && \
 
 #COPY oneapi /opt/intel/oneapi 
 # Install Intel OneAPI
-ENV ONEAPI_VERSION=2023.2
+ENV ONEAPI_VERSION=2023.2-devel
 RUN apt-get update -y && \
     apt-get install -y gpg-agent wget \
     wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB | gpg --dearmor | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null && \
