@@ -37,7 +37,7 @@ Versions Available:
    LSF_DOCKER_IPC=host \
    bsub -n 20 -Is -q general-interactive \
    -R "affinity[core(1):distribute=pack] span[ptile=4]" \
-   bsub -Is -q general-interactive -a 'docker(us.gcr.io/ris-appeng-shared-dev/compiler-base:ubuntu22_oneapi2025-1_mofed5-8)' \
+   bsub -Is -q general-interactive -a 'docker(ghcr.io/washu-it-ris/compiler-base:ubuntu22-mofed5.8-oneapi2025)' \
    /bin/bash
    ```
 3. Set up the Intel environment.
