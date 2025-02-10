@@ -11,7 +11,7 @@ WORKDIR /opt/mpi_hello_world/src/
 # RUN wget https://hpc-tutorials.llnl.gov/mpi/examples/mpi_hello.c
 
 # Copy the source code to the working directory
-COPY mpi_hello.c .
+COPY mpi_hello_world.c .
 
 # Copy source code to a new location inside the container.
 RUN cd /opt/mpi_hello_world/src/ && \
