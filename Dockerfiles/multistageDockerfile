@@ -8,7 +8,7 @@ FROM docker.io/intel/hpckit:2024.2.1-0-devel-ubuntu22.04 as build
 WORKDIR /opt/mpi_hello_world/src/
 
 # Get test file
-wget https://hpc-tutorials.llnl.gov/mpi/examples/mpi_hello.c
+RUN wget https://hpc-tutorials.llnl.gov/mpi/examples/mpi_hello.c
 
 # Copy the source code to the working directory
 # COPY mpi_hello_world.c .
