@@ -69,7 +69,7 @@ public consumption.
 1. Create a new Dockerfile.
    ```bash
    # Begin Stage 1 with the base compiler image.
-   FROM ghcr.io/WashU-IT-RIS/compiler-base:oneapi2021.1.1_centos7 as build
+   FROM ghcr.io/washu-it-ris/compiler-base:ubuntu22-mofed5.8-oneapi2025 as build
 
    # Add any additional build dependencies here.
 
