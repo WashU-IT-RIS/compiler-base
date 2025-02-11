@@ -15,6 +15,7 @@ COPY mpi_hello.c .
 
 # Copy source code to a new location inside the container.
 RUN cd /opt/mpi_hello_world/src/ && \
+    RUN . /opt/intel/oneapi/setvars.sh --force && \
     mpiicx -o mpi_hello_world mpi_hello.c && \
     cp -f mpi_hello_world /usr/local/bin
 
@@ -27,7 +28,7 @@ FROM ubuntu:22.04 as runtime
 COPY --from=build /usr/local/bin/mpi_hello_world /usr/local/bin
 # COPY --from=build /usr/local/bin/runmpi /usr/local/bin/runmpi
 
-RUN . /opt/intel/oneapi/setvars.sh --force
+
 
 # Add any additional runtime dependencies here
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
