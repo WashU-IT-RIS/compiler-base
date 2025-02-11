@@ -13,6 +13,8 @@ WORKDIR /opt/mpi_hello_world/src/
 # Copy the source code to the working directory
 COPY mpi_hello.c .
 
+SETVARS_ARGS="ia32 --force"; export SETVARS_ARGS
+
 # Copy source code to a new location inside the container.
 RUN cd /opt/mpi_hello_world/src/ && \
     . /opt/intel/oneapi/setvars.sh && \
