@@ -3,6 +3,7 @@ FROM docker.io/intel/hpckit:2024.2.1-0-devel-ubuntu22.04 as build
 
 # Additional dependencies for the Intel® MPI C compiler
 # RUN apt-get install -y gcc-c++
+SHELL ["/bin/bash", "-c"]
 
 # Change working directory
 WORKDIR /opt/mpi_hello_world/src/
@@ -13,11 +14,9 @@ WORKDIR /opt/mpi_hello_world/src/
 # Copy the source code to the working directory
 COPY mpi_hello.c .
 
-SETVARS_ARGS="ia32 --force"; export SETVARS_ARGS
-
 # Copy source code to a new location inside the container.
 RUN cd /opt/mpi_hello_world/src/ && \
-    . /opt/intel/oneapi/setvars.sh && \
+    . /opt/intel/oneapi/setvars.sh --force && \
     mpiicx -o mpi_hello_world mpi_hello.c && \
     cp -f mpi_hello_world /usr/local/bin
 
