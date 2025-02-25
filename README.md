@@ -3,13 +3,13 @@
 These images have been developed as working examples to aid in demonstrating how to
 build and leverage compilers using Docker.
 
-Image Location: `us.gcr.io/ris-appeng-shared-dev/compiler-base`
+Image Location: `ghcr.io/washu-it-ris/compiler-base`
 
 Versions Available:
 - Tags:
-  - latest, oneapi2021.1.1_centos7
+  - latest, ubuntu22-mofed5.8-oneapi2025
 
-## Build oneapi2021.1.1_centos7 Image
+## Build ubuntu22-mofed5.8-oneapi2025 Image
 1. Clone this repo.
    ```bash
    git clone ssh://git@github.com/WashU-IT-RIS/compiler-base.git
@@ -18,28 +18,26 @@ Versions Available:
    ```bash
    cd /compiler-base
    ```
-3. Copy oneapi.
+3. Create Docker image. Replace `<IMAGE_NAME>:<TAG>` with that of your choosing.
    ```bash
-   cp -r /scratch1/fs1/ris/application/intel/oneapi/ .
-   chmod 755 -R oneapi/
+   docker build --tag <IMAGE_NAME>:<TAG> -f Dockerfile .
    ```
-4. Create Docker image. Replace `<IMAGE_NAME>:<TAG>` with that of your choosing.
-   ```bash
-   docker build --tag <IMAGE_NAME>:<TAG> -f Dockerfile.oneapi2021.1.1_centos7 .
-   ```
-5. Push the Docker image.
+4. Push the Docker image.
    ```bash
    docker push <IMAGE_NAME>:<TAG>
    ```
 
-## Compile Using oneapi2021.1.1_centos7 Base Image
+## Compile Using ubuntu22-mofed5.8-oneapi2025 Base Image
 1. Connect to the compute client.
    ```bash
    ssh <wustlkey>@compute1-client-1.ris.wustl.edu
 2. Run on LSF, mounting the necessary storage allocation(s) for use.
    ```bash
-   LSF_DOCKER_VOLUMES="/scratch1/fs1/ris/application/intel/oneapi/:/opt/intel/oneapi" \
-   bsub -Is -q general-interactive -a 'docker(us.gcr.io/ris-appeng-shared-dev/compiler-base:oneapi2021.1.1_centos7)' \
+   LSF_DOCKER_NETWORK=host \
+   LSF_DOCKER_IPC=host \
+   bsub -n 20 -Is -q general-interactive \
+   -R "affinity[core(1):distribute=pack] span[ptile=4]" \
+   bsub -Is -q general-interactive -a 'docker(ghcr.io/washu-it-ris/compiler-base:ubuntu22-mofed5.8-oneapi2025)' \
    /bin/bash
    ```
 3. Set up the Intel environment.
@@ -48,7 +46,7 @@ Versions Available:
    ```
 4. Compile code.
 
-## Extend oneapi2021.1.1_centos7 Base Image
+## Extend ubuntu22-mofed5.8-oneapi2025 Base Image
 
 ### Multi Stage Build: Compile, Keep Only Binaries
 Create a new image containing:
@@ -71,7 +69,7 @@ public consumption.
 1. Create a new Dockerfile.
    ```bash
    # Begin Stage 1 with the base compiler image.
-   FROM ghcr.io/WashU-IT-RIS/compiler-base:oneapi2021.1.1_centos7 as build
+   FROM ghcr.io/washu-it-ris/compiler-base:ubuntu22-mofed5.8-oneapi2025 as build
 
    # Add any additional build dependencies here.
 
@@ -88,7 +86,7 @@ public consumption.
       cp -f example.binary /usr/local/bin
 
    # Begin Stage 2 with a new base image.
-   FROM docker.io/centos:7.9-2009
+   FROM docker.io/ubuntu:22.04
 
    # Copy only the needed parts of Stage 1.
    COPY --from=build /usr/local/bin/example.binary /usr/local/bin
@@ -98,8 +96,8 @@ public consumption.
    # Add any additional runtime dependencies here.
 
    # Set up MLNX_OFED driver.
-   ENV MOFED_VERSION 5.8-4.1.5.0
-   ENV OS_VERSION rhel7.9
+   ENV MOFED_VERSION 5.8-6.0.4.2
+   ENV OS_VERSION ubuntu22.04
    ENV PLATFORM x86_64
    RUN wget -q http://content.mellanox.com/ofed/MLNX_OFED-${MOFED_VERSION}/MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
       tar -xvf MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
@@ -126,7 +124,7 @@ caches the source code in build layers resulting in public exposure which may be
 
 1. Create a new Dockerfile.
    ```bash
-   FROM ghcr.io/WashU-IT-RIS/compiler-base:oneapi2021.1.1_centos7
+   FROM ghcr.io/WashU-IT-RIS/compiler-base:ubuntu22-mofed5.8-oneapi2025
 
    # Add any additional build dependencies here.
 
