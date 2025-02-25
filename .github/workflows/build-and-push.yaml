@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           file: Dockerfile
-          tags: ghcr.io/washu-it-ris/base-openmpi:latest
+          tags: ghcr.io/washu-it-ris/compiler-base:latest
           platforms: linux/amd64
           labels: |
             org.opencontainers.image.title="RIS Intel OneAPI Compiler-Base"
@@ -47,7 +47,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           file: Dockerfiles/ubuntu22-mofed5.8-oneapi2025
-          tags: ghcr.io/washu-it-ris/base-openmpi:latest
+          tags: ghcr.io/washu-it-ris/compiler-base:ubuntu22-mofed5.8-oneapi2025
           platforms: linux/amd64
           labels: |
             org.opencontainers.image.title="RIS Intel OneAPI Compiler-Base"
