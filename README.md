@@ -7,9 +7,9 @@ Image Location: `ghcr.io/washu-it-ris/compiler-base`
 
 Versions Available:
 - Tags:
-  - latest, ubuntu22_oneapi2025-1_mofed5-8
+  - latest, ubuntu22-mofed5.8-oneapi2025
 
-## Build ubuntu22_oneapi2025-1_mofed5-8 Image
+## Build ubuntu22-mofed5.8-oneapi2025 Image
 1. Clone this repo.
    ```bash
    git clone ssh://git@github.com/WashU-IT-RIS/compiler-base.git
@@ -27,7 +27,7 @@ Versions Available:
    docker push <IMAGE_NAME>:<TAG>
    ```
 
-## Compile Using ubuntu22_oneapi2025-1_mofed5-8 Base Image
+## Compile Using ubuntu22-mofed5.8-oneapi2025 Base Image
 1. Connect to the compute client.
    ```bash
    ssh <wustlkey>@compute1-client-1.ris.wustl.edu
@@ -46,7 +46,7 @@ Versions Available:
    ```
 4. Compile code.
 
-## Extend ubuntu22_oneapi2025-1_mofed5-8 Base Image
+## Extend ubuntu22-mofed5.8-oneapi2025 Base Image
 
 ### Multi Stage Build: Compile, Keep Only Binaries
 Create a new image containing:
@@ -86,7 +86,7 @@ public consumption.
       cp -f example.binary /usr/local/bin
 
    # Begin Stage 2 with a new base image.
-   FROM docker.io/centos:7.9-2009
+   FROM docker.io/ubuntu:22.04
 
    # Copy only the needed parts of Stage 1.
    COPY --from=build /usr/local/bin/example.binary /usr/local/bin
@@ -96,8 +96,8 @@ public consumption.
    # Add any additional runtime dependencies here.
 
    # Set up MLNX_OFED driver.
-   ENV MOFED_VERSION 5.8-4.1.5.0
-   ENV OS_VERSION rhel7.9
+   ENV MOFED_VERSION 5.8-6.0.4.2
+   ENV OS_VERSION ubuntu22.04
    ENV PLATFORM x86_64
    RUN wget -q http://content.mellanox.com/ofed/MLNX_OFED-${MOFED_VERSION}/MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
       tar -xvf MLNX_OFED_LINUX-${MOFED_VERSION}-${OS_VERSION}-${PLATFORM}.tgz && \
@@ -124,7 +124,7 @@ caches the source code in build layers resulting in public exposure which may be
 
 1. Create a new Dockerfile.
    ```bash
-   FROM ghcr.io/WashU-IT-RIS/compiler-base:oneapi2021.1.1_centos7
+   FROM ghcr.io/WashU-IT-RIS/compiler-base:ubuntu22-mofed5.8-oneapi2025
 
    # Add any additional build dependencies here.
 

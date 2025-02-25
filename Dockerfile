@@ -1,1 +1,0 @@
-Dockerfiles/ubuntu22-mofed5.8-oneapi2025
