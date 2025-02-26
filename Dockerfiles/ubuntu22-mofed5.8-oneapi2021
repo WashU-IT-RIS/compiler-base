@@ -2,13 +2,13 @@
 FROM spack/ubuntu-jammy:latest as builder
 
 # Install Intel OneAPI
-RUN spack install intel-oneapi-compilers@2021.4.0
+RUN spack install intel-oneapi-compilers@2021.4.0 intel-oneapi-mpi@2021.12.1
 
 # Use plain Ubuntu as runtime
 FROM ubuntu:jammy as runtime
 
 # COPY forward Spack built software
-COPY --from=builder /opt/spack /opt/spack
+COPY --from=builder /opt/spack/opt/spack /opt/spack
 
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
     apt-get install -y \
