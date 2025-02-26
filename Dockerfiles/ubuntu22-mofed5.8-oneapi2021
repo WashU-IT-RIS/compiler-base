@@ -2,7 +2,7 @@
 FROM spack/ubuntu-jammy:latest as builder
 
 # Install Intel OneAPI
-RUN spack install intel-oneapi-compilers@2021.4.0
+RUN install intel-oneapi-compilers@2021.4.0
 
 # Use plain Ubuntu as runtime
 FROM ubuntu:jammy as runtime
