@@ -7,8 +7,15 @@ RUN spack install intel-oneapi-compilers@2021.4.0 intel-oneapi-mpi@2021.12.1
 # Use plain Ubuntu as runtime
 FROM ubuntu:jammy as runtime
 
-# COPY forward Spack built software
-COPY --from=builder /opt/spack/opt/spack /opt/spack
+# COPY forward Spack and software
+COPY --from=builder /opt/spack /opt/spack
+
+# Create /etc/bashrc to setup spack env
+RUN cat <<- EOF >/etc/bashrc
+    source /opt/spack/share/spack/setup-env.sh
+    spack load intel-oneapi-compilers
+    spack load intel-oneapi-mpi
+    EOF
 
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
     apt-get install -y \
