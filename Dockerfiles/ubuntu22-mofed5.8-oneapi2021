@@ -11,11 +11,9 @@ FROM ubuntu:jammy as runtime
 COPY --from=builder /opt/spack /opt/spack
 
 # Create /etc/bashrc to setup spack env
-RUN cat <<- EOF >/etc/bashrc
-    source /opt/spack/share/spack/setup-env.sh
-    spack load intel-oneapi-compilers
-    spack load intel-oneapi-mpi
-    EOF
+RUN echo "source /opt/spack/share/spack/setup-env.sh" > /etc/bashrc && \
+    echo "spack load intel-oneapi-compilers" >> /etc/bashrc && \
+    echo "spack load intel-oneapi-mpi" >> /etc/bashrc
 
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && \
     apt-get install -y \
