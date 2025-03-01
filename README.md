@@ -8,6 +8,7 @@ Image Location: `ghcr.io/washu-it-ris/compiler-base`
 Versions Available:
 - Tags:
   - latest, ubuntu22-mofed5.8-oneapi2025
+  - ubuntu22-mofed5.8-oneapi2021
 
 ## Build ubuntu22-mofed5.8-oneapi2025 Image
 1. Clone this repo.
